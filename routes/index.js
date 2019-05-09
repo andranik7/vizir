@@ -7,7 +7,8 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/randomGif', function(req, res, next) {
-  console.log(req.body)
+  console.log(req.body.command)
+  console.log(req.body.text)
   res.send("hello")
 });
 
