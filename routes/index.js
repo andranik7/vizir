@@ -19,21 +19,24 @@ router.post('/randomGif', function(req, res, next) {
   // faire une recherche giphy avec l'api
   giphy.search(text, function (err, data) {
     // si tout va bien
+    console.log(data)
+    console.log(err)
     if(!err){
       let gifs = data.data // on récupère tous les gif
       let random = gifs[Math.floor(Math.random()*gifs.length)];
-      let url = random.images.fixed_height_still.url
+      let url = random.images.fixed_height_still.url;
+
       // on envoie un attachement pour que slack affiche le gif
       let attachement = {
           "attachments": [
               {
-
-
                   "image_url": url,
                   "thumb_url": url
               }
           ]
       }
+
+
       res.json(attachement)
     }else{
       res.send("Pas de gif trouvé :(")
