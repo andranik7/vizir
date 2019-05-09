@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const request = require('request').defaults({ encoding: null });
 
 
 let key = "x9F6yyXvxdSqqj0rN0L0kFDVRBWimmAe" // clé api Giphy
@@ -20,9 +21,17 @@ router.post('/randomGif', function(req, res, next) {
     // si tout va bien
     if(!err){
       let gifs = data.data
-      res.writeHead(200, {'Content-Type': 'image/gif' });
-      console.log(gifs[0].images.fixed_height.url)
-      res.end(gifs[0].images.fixed_height.url);
+
+      //data = "data:" + response.headers["content-type"] + ";base64," + new Buffer(body).toString('base64');
+      // on récupère la base64 de l'image avec une requete get
+      request.get(gifs[0].images.fixed_height.url, function (error, response, body) {
+          if (!error && response.statusCode == 200) {
+              data = "data:" + response.headers["content-type"] + ";base64," + new Buffer(body).toString('base64');
+              res.writeHead(200, {'Content-Type': 'image/gif' });
+              res.end(data, 'binary');
+          }
+      });
+
     }else{
       res.send("Pas de gif trouvé :(")
     }
