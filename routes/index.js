@@ -25,7 +25,7 @@ router.post('/randomGif', function(req, res, next) {
       if(data.data.length>0){
         let gifs = data.data // on récupère tous les gif
         let random = gifs[Math.floor(Math.random()*gifs.length)];
-        let url = random.images.fixed_height_still.url;
+        let url = random.images.preview_gif.url;
 
         // on envoie un attachement pour que slack affiche le gif
         let attachement = {
