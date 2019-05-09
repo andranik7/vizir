@@ -22,7 +22,7 @@ router.post('/randomGif', function(req, res, next) {
     console.log(data)
     console.log(err)
     if(!err){
-      if(data.length>0){
+      if(data.data.length>0){
         let gifs = data.data // on récupère tous les gif
         let random = gifs[Math.floor(Math.random()*gifs.length)];
         let url = random.images.fixed_height_still.url;
@@ -36,7 +36,7 @@ router.post('/randomGif', function(req, res, next) {
                 }
             ]
         }
-        
+
         res.json(attachement)
 
       }else{
