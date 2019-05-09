@@ -22,24 +22,30 @@ router.post('/randomGif', function(req, res, next) {
     console.log(data)
     console.log(err)
     if(!err){
-      let gifs = data.data // on récupère tous les gif
-      let random = gifs[Math.floor(Math.random()*gifs.length)];
-      let url = random.images.fixed_height_still.url;
+      if(data.length>0){
+        let gifs = data.data // on récupère tous les gif
+        let random = gifs[Math.floor(Math.random()*gifs.length)];
+        let url = random.images.fixed_height_still.url;
 
-      // on envoie un attachement pour que slack affiche le gif
-      let attachement = {
-          "attachments": [
-              {
-                  "image_url": url,
-                  "thumb_url": url
-              }
-          ]
+        // on envoie un attachement pour que slack affiche le gif
+        let attachement = {
+            "attachments": [
+                {
+                    "image_url": url,
+                    "thumb_url": url
+                }
+            ]
+        }
+        
+        res.json(attachement)
+
+      }else{
+        // aucun gif trouvé
+        res.send("Aucun gif trouvé avec ce mot")
       }
 
-
-      res.json(attachement)
     }else{
-      res.send("Pas de gif trouvé :(")
+      res.send("Quelque chose s'est mal passée dans la requête :(")
     }
   });
 
