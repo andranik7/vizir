@@ -24,14 +24,25 @@ router.post('/randomGif', function(req, res, next) {
 
       //data = "data:" + response.headers["content-type"] + ";base64," + new Buffer(body).toString('base64');
       // on récupère la base64 de l'image avec une requete get
-      request.get(gifs[0].images.fixed_height.url, function (error, response, body) {
-          if (!error && response.statusCode == 200) {
-              data = "data:" + response.headers["content-type"] + ";base64," + new Buffer(body).toString('base64');
-              res.writeHead(200, {'Content-Type': 'image/gif' });
-              res.end(data, 'binary');
-          }
-      });
+      // request.get(gifs[0].images.fixed_height.url, function (error, response, body) {
+      //     if (!error && response.statusCode == 200) {
+      //         data = "data:" + response.headers["content-type"] + ";base64," + new Buffer(body).toString('base64');
+      //         res.writeHead(200, {'Content-Type': 'image/gif' });
+      //         res.end(data, 'binary');
+      //     }
+      // });
 
+      let attachement = {
+          "attachments": [
+              {
+
+
+                  "image_url": "https://media0.giphy.com/media/NS7gPxeumewkWDOIxi/200.gif",
+                  "thumb_url": "https://media0.giphy.com/media/NS7gPxeumewkWDOIxi/200.gif"
+              }
+          ]
+      }
+      res.json(attachement)
     }else{
       res.send("Pas de gif trouvé :(")
     }
